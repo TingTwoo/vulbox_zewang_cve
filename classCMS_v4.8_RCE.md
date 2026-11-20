@@ -183,44 +183,44 @@ Backend access is required (`/index.php/admin`) with the permissions to manage t
 ## Steps to Reproduce
 
 1. Log in to the backend at `/index.php/admin` (default credentials `admin` / `admin`).
-![01-backend-login](images/01-backend-login.png)
+![01-backend-login](01-backend-login.png)
 2. Go to **模型管理** (Model Management) and click the **字段** (Fields) button of the **文章** (Article) model.
-![02-model-list](images/02-model-list.png)
+![02-model-list](02-model-list.png)
 3. In the field list of the model, add a new field at the bottom of the table: 字段名 (field name) `file`, 标识 (identifier) `upload`, 类型 (type) **文件上传** (file upload), then click **增加字段** (Add Field).
-![03-add-fileupload-field](images/03-add-fileupload-field.png)
+![03-add-fileupload-field](03-add-fileupload-field.png)
 4. The field was created (`file[upload]: 增加成功`), click **保存** (Save).
-![04-field-added](images/04-field-added.png)
+![04-field-added](04-field-added.png)
 5. The new field `file` of type `文件上传` is now part of the model:
-![05-field-list](images/05-field-list.png)
+![05-field-list](05-field-list.png)
 6. Click **修改** (Modify) on the `file` field:
-![06-field-edit-basic](images/06-field-edit-basic.png)
+![06-field-edit-basic](06-field-edit-basic.png)
 7. Open the **字段配置** (Field Configuration) tab and set 目录 (directory) to `/class/template/` and 文件名 (file name) to `x.php(ext)`, then click **保存** (Save).
-![07-field-config-dir-filename](images/07-field-config-dir-filename.png)
+![07-field-config-dir-filename](07-field-config-dir-filename.png)
 8. Go to **栏目管理** (Column Management) and click **管理** (Manage) on the **文章** (Article) model.
-![08-column-list](images/08-column-list.png)
+![08-column-list](08-column-list.png)
 9. In the article list click **增加** (Add) to open the article form, which now contains the new `file` upload control.
-![09-article-list](images/09-article-list.png)
+![09-article-list](09-article-list.png)
 10. Prepare a file named `poc.jpg` whose whole content is the following PHP code:
 
     ```php
     <?php echo "RCE-POC-20261120"; ?>
     ```
 
-![10-poc-jpg-content](images/10-poc-jpg-content.png)
+![10-poc-jpg-content](10-poc-jpg-content.png)
 11. In the article form click the upload button of the `file` field and select `poc.jpg`:
-![11-article-form-upload](images/11-article-form-upload.png)
+![11-article-form-upload](11-article-form-upload.png)
 12. The upload succeeds, the backend stored the file as `x.php.jpg` (the `x.php` prefix comes from the configured file name pattern, `jpg` from the extension of the uploaded file):
-![12-upload-success-xphpjpg](images/12-upload-success-xphpjpg.png)
+![12-upload-success-xphpjpg](12-upload-success-xphpjpg.png)
 13. Fill the remaining fields (标题 / 关键词 / 描述, e.g. `test`) and click **增加** (Add).
-![13-article-added](images/13-article-added.png)
+![13-article-added](13-article-added.png)
 14. Go back to **模型管理** and click the **页面** (Pages) button of the **文章** model.
-![14-model-pages](images/14-model-pages.png)
+![14-model-pages](14-model-pages.png)
 15. In the page list click **增加页面** (Add Page):
-![15-page-list](images/15-page-list.png)
+![15-page-list](15-page-list.png)
 16. Create the page with 网址 (URL) `/rec-test/`, 标识 (identifier) `test` and 模板文件 (template file) `x.php.jpg`, then click **增加** (Add).
-![16-add-page-rec-test](images/16-add-page-rec-test.png)
+![16-add-page-rec-test](16-add-page-rec-test.png)
 17. Visit `http://127.0.0.1/rec-test/`. The page outputs `RCE-POC-20261120`, the PHP code of the uploaded `x.php.jpg` was executed on the server.
-![17-rce-output](images/17-rce-output.png)
+![17-rce-output](17-rce-output.png)
 
 ## Fix
 
